@@ -1,16 +1,28 @@
-import { useState, ChangeEvent } from "react";
+import { Dispatch, SetStateAction } from "react";
+import { ChangeEvent } from "react";
+import { MdSearch, MdClose } from "react-icons/md";
 
-const Search: React.FC = () => {
- const [searchValue, setSearchValue] = useState("");
+type SearchType = {
+ searchQuery: string;
+ setSearchQuery: Dispatch<SetStateAction<string>>;
+};
 
+const Search: React.FC<SearchType> = ({ searchQuery, setSearchQuery }) => {
  return (
-  <div className="bg-yellow-500 rounded-md w-[300px] h-[28px] pt-[2px]">
+  <div className=" flex flex-row bg-white border-[1px] border-gray-400 rounded-md w-[380px] h-[28px] pt-[2px]">
+   <MdSearch className="opacity-60 ml-1 mt-[2px] w-[20px] h-[20px]" />
    <input
-    value={searchValue}
-    onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
+    value={searchQuery}
+    onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
     placeholder="search"
-    className="ml-2 bg-transparent text-black placeholder:text-red-600 focus:outline-none"
+    className="ml-[2px] bg-transparent w-[320px] text-black placeholder:text-zinc-300  focus:outline-none"
    />
+   {searchQuery && (
+    <MdClose
+     className="ml-2 opacity-60 w-[24px] h-[24px] cursor-pointer"
+     onClick={() => setSearchQuery("")}
+    />
+   )}
   </div>
  );
 };
