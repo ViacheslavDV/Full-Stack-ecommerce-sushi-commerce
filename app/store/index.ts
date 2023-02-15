@@ -1,4 +1,3 @@
-import { scrollReducer } from "./slices/scrollToMenuSlice";
 import { cartReducer } from "./slices/cartSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
@@ -23,7 +22,6 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
  cart: cartReducer,
- scroll: scrollReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

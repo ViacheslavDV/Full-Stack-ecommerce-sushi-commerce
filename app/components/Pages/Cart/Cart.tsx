@@ -1,10 +1,9 @@
 import { useActions } from "@/app/hooks/useActions";
 import { useTypedSelector } from "@/app/hooks/useTypedSelector";
 import { IProduct } from "@/app/types/IProduct";
-import { current } from "@reduxjs/toolkit";
 import Image from "next/image";
 
-const Cart = () => {
+const Cart: React.FC = () => {
  const { persistedReducer } = useTypedSelector((state) => state);
  const { decrementQuantity, incrementQuantity, removeFromCart } = useActions();
  // Total price

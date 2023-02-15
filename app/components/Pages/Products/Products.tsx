@@ -4,22 +4,17 @@ import ProductItem from "@/app/components/ProductItem/ProductItem";
 import Filters from "@/app/components/Filters/Filters";
 import { useProductsQuery } from "@/app/hooks/useProductsQuery";
 import Error from "@/app/components/Loaders/Error";
-import { useScrollToMenu } from "@/app/hooks/useScrollToMenu";
 
-type ProductsType = {
- menuRef: any;
-};
-
-const Products: React.FC<ProductsType> = () => {
+const Products: React.FC = () => {
  const { data, status, searchQuery, setSearchQuery } = useProductsQuery();
- const { menuRef } = useScrollToMenu();
 
  return (
   <div className="bg-white">
+   <div></div>
    <div>
     <Preview />
    </div>
-   <div ref={menuRef}>
+   <div>
     <Filters searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
    </div>
    <div>
