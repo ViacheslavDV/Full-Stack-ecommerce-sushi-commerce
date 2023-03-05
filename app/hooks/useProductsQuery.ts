@@ -1,31 +1,51 @@
 import { useDebounce } from "./useDebounce";
 import { IProduct } from "@/app/types/IProduct";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, QueryClient, dehydrate } from "@tanstack/react-query";
 import axios from "axios";
+
+export async function getStaticProps() {
+ const queryClient = new QueryClient();
+ await queryClient.prefetchQuery<IProduct[]>(
+  ["products"],
+  async (): Promise<IProduct[]> =>
+   await axios
+    .get(`http://localhost:4200/api/products?searchQuery=""&sortByPar="createdAt"&orderByPar="asc"`)
+    .then((res) => res.data)
+ );
+ return {
+  props: {
+   dehydratedState: dehydrate(queryClient),
+  },
+ };
+}
 
 export const useProductsQuery = () => {
  const [searchQuery, setSearchQuery] = useState("");
- const [priceQuery, setPriceQuery] = useState();
- const [ratingQuery, setRatingQuery] = useState();
- const [dateQuery, setDateQuery] = useState();
+ const [sortedParam, setSortedParam] = useState("createdAt");
+ const [sortOrder, setSortOrder] = useState("asc");
  const debounced = useDebounce(searchQuery);
 
  const { data, status } = useQuery({
-  queryKey: ["products", debounced],
-  queryFn: async () =>
+  queryKey: ["products", debounced, sortedParam, sortOrder],
+  queryFn: async (): Promise<IProduct[]> =>
    await axios
     .get(
-     `http://localhost:4200/api/products?searchTerm=${searchQuery}&?sortByPrice=${priceQuery}&?sortByRating=${ratingQuery}&?sortByDate=${dateQuery}`
+     `http://localhost:4200/api/products?searchQuery=${searchQuery}&sortByPar=${sortedParam}&orderByPar=${sortOrder}`
     )
     .then((res) => res.data),
+  refetchOnMount: false,
+  refetchOnWindowFocus: false,
  });
 
- console.log(data);
  return {
   data,
   status,
   searchQuery,
   setSearchQuery,
+  sortedParam,
+  setSortedParam,
+  sortOrder,
+  setSortOrder,
  };
 };

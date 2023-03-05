@@ -2,6 +2,7 @@ import { useActions } from "@/app/hooks/useActions";
 import { useTypedSelector } from "@/app/hooks/useTypedSelector";
 import { IProduct } from "@/app/types/IProduct";
 import Image from "next/image";
+import EmptyCart from "./EmptyCart";
 
 const Cart: React.FC = () => {
  const { persistedReducer } = useTypedSelector((state) => state);
@@ -20,34 +21,34 @@ const Cart: React.FC = () => {
    {persistedReducer.cart &&
     persistedReducer.cart.items.map((item: IProduct) => (
      <div key={item.id}>
-      <main className="flex flex-row justify-around p-4 m-4 h-[120px] border-[1px] border-gray-300 rounded-md ">
+      <main className="flex flex-row flex-wrap justify-around p-4 m-4 min-h-[120px] border-[1px] border-gray-300 rounded-md ">
        <div className="flex flex-row lg:justify-around space-x-2 max-md:w-[380px] w-[55%]">
-        <div className="flex justify-center w-[160px]">
+        <div className="flex justify-center w-[180px] max-md:w-[160px]">
          <Image
           className="rounded-md border-2 border-black"
           loader={myLoader}
           src={item.images}
-          width={160}
+          width={180}
           height={100}
           alt={item.name}
          />
         </div>
         <div className="my-auto pl-4 overflow-hidden w-[180px] max-md:w-[120px]">{item.name}</div>
-        <div className="py-8 pl-4 whitespace-nowrap">
+        <div className="py-8 pl-4 whitespace-nowrap my-auto">
          {(item.price * item.quantity).toFixed(2)} €
         </div>
        </div>
 
-       <div className="flex flex-row space-x-3 my-auto">
+       <div className="flex flex-row space-x-3 my-auto h-[120px] ">
         <button
-         className="border-[1px] border-gray-300 rounded-md w-[28px]"
+         className="border-[1px] border-gray-300 rounded-md w-[28px] h-[28px] my-auto"
          onClick={() => incrementQuantity(item.id)}
         >
          +
         </button>
-        <p className="mt-[1px]">{item.quantity}</p>
+        <p className="flex mt-[calc(50%+3px)]">{item.quantity}</p>
         <button
-         className="border-[1px] border-gray-300 rounded-md w-[28px]"
+         className="border-[1px] border-gray-300 rounded-md w-[28px] h-[28px] my-auto"
          onClick={() => decrementQuantity(item.id)}
         >
          -
@@ -66,7 +67,9 @@ const Cart: React.FC = () => {
     <div className="flex justify-end mr-20 max-md:mr-10">Total : {total} €</div>
    )}
    {persistedReducer.cart.items.length < 1 && (
-    <div className="flex justify-center pt-[20vh]">Cart is Empty</div>
+    <div className="flex justify-center pt-[15vh]">
+     <EmptyCart />
+    </div>
    )}
   </div>
  );

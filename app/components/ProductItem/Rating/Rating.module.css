@@ -1,0 +1,11 @@
+.wrapper {
+ @apply flex flex-row justify-center space-x-2 overflow-hidden;
+}
+
+.width {
+ @apply flex flex-row overflow-hidden whitespace-nowrap;
+}
+
+.star {
+ @apply text-yellow-400 mt-[1px] min-h-[22px] min-w-[20px] overflow-hidden;
+}

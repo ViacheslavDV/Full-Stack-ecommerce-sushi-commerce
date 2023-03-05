@@ -11,9 +11,6 @@ const CartMenu: React.FC<ICartMenu> = ({ item }) => {
  const { persistedReducer } = useTypedSelector((state) => state);
  const uniqueProduct = persistedReducer.cart.items.find((i) => i.id === item.id);
 
- //  console.log(item, item.quantity);
- //  console.log(persistedReducer);
-
  return (
   <div className="flex flex-col mx-auto justify-center rounded-md w-[140px] my-[10px]">
    <div className="flex flex-row mx-auto space-x-3">

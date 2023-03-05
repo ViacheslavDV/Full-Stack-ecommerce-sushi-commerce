@@ -19,7 +19,7 @@ const Search: React.FC<SearchType> = ({ searchQuery, setSearchQuery }) => {
    />
    {searchQuery && (
     <MdClose
-     className="ml-2 opacity-60 w-[24px] h-[24px] cursor-pointer"
+     className="ml-[6px] opacity-60 w-[24px] h-[24px] cursor-pointer"
      onClick={() => setSearchQuery("")}
     />
    )}
